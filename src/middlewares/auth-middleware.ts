@@ -11,11 +11,14 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
   }
   const redisKey = `auth:jwtToken:${sessionToken}`
   try{
-    const jwt = redisClient.get(redisKey)
+    let jwt = await redisClient.get(redisKey)
     if (!jwt){
-      const jwt = 
+      jwt = await getToken(sessionToken) 
     }
+    req.headers['authorization'] = `Bearer ${jwt}`
+    next()
   }catch(err){
-
+    console.log("An error occured", err)
+    throw err
   }
 }
