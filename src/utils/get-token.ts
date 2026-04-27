@@ -1,15 +1,14 @@
 import axios from "axios"
 import { redisClient } from './redis';
-interface jwtResponse {
-  token: string
-}
+
 export const getToken = async (token: string) => {
-  const data: jwtResponse= await axios.get(`${process.env.BETTER_AUTH_URL}/api/auth/token`, {
+  const response = await axios.get(`${process.env.USER_SERVICE_URL}/api/auth/token`, {
     headers:{
-      "Authorization": `Bearer ${token}`
+      Cookie: `better-auth.session_token=${token}`
     }
   })
+  console.log(token, response)
   const key = `auth:jwtToken:${token}`
-  redisClient.setEx(key, 1800, data.token) 
-  return data.token
+  redisClient.setEx(key, 1800, response.data.token) 
+  return response.data.token
 }
