@@ -1,2 +1,2 @@
-export {getToken} from "./get-token"
-export {redisClient} from "./redis"
+export { getToken } from "./get-token";
+export { redisClient } from "./redis";
