@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { router } from "./src/routes";
-import { authMiddleware } from "./src/middlewares/auth-middleware";
+import { assignJwt, validateToken } from "./src/middlewares";
 
 dotenv.config();
 
@@ -19,8 +19,10 @@ app.get("/", (req, res) => {
 //routes
 app.use("/api", router);
 
-app.get("/auth-test", authMiddleware, (req, res) => {
+app.get("/auth-test", assignJwt, validateToken,  (req, res) => {
+  console.log(req.headers)
   res.send("Better auth working");
+  return
 });
 
 app.listen(port, () => {

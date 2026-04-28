@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { redisClient } from "../utils";
 import { getToken } from "../utils";
 
-export const authMiddleware = async (
+export const assignJwt = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -25,6 +25,6 @@ export const authMiddleware = async (
     next();
   } catch (err) {
     console.log("An error occured", err);
-    throw err;
+    next(err);
   }
 };
