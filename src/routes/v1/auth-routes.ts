@@ -1,5 +1,5 @@
 import express from "express";
-import { createProxyMiddleware } from "http-proxy-middleware";
+import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
 
 export const authRouter = express.Router();
 const authProxy = createProxyMiddleware({
@@ -9,6 +9,7 @@ const authProxy = createProxyMiddleware({
   on: {
     proxyReq: (proxyReq, req) => {
       proxyReq.setHeader("Origin", `http://localhost:${process.env.PORT}`)
+      fixRequestBody(proxyReq, req)
     }
   }
 });
