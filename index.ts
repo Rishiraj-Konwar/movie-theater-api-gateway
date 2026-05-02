@@ -19,12 +19,6 @@ app.get("/", (req, res) => {
 //routes
 app.use("/api", router);
 
-app.get("/auth-test", assignJwt, validateToken,  (req, res) => {
-  console.log(req.headers)
-  res.send("Better auth working");
-  return
-});
-
 app.listen(port, () => {
   console.log(`api gateway running at http://localhost:${port}`);
 });
